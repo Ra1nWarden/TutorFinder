@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="action_button_size">24dp</dimen>
+    <dimen name="drawer_width">240dp</dimen>
+    <dimen name="drawer_item_height">60dp</dimen>
+</resources>
