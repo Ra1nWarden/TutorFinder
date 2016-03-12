@@ -12,9 +12,11 @@
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_action_bar_menu"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white"
+        android:onClick="toggleDrawer"/>
 
     <TextView
+        android:id="@+id/app_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

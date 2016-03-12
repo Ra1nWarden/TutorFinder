@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/username_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_name"/>
+
+        <EditText
+            android:id="@+id/use_name_field"
+            android:layout_width="@dimen/login_section_field_width"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:paddingLeft="@dimen/login_section_field_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/password_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password"/>
+
+        <EditText
+            android:id="@+id/password_field"
+            android:layout_width="@dimen/login_section_field_width"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:paddingLeft="@dimen/login_section_field_padding"/>
+
+    </LinearLayout>
+
+</LinearLayout>
