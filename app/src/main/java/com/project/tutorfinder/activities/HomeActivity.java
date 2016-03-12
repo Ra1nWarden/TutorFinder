@@ -22,7 +22,6 @@ import project.com.tutorfinder.R;
 public final class HomeActivity extends AppCompatActivity implements AdapterView
         .OnItemClickListener {
 
-    private final String LOGIN_TAG = "logInDialog";
     private DrawerLayout drawer;
     private ListView options;
     private UserManager userManager;
@@ -67,7 +66,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
         super.onResume();
         if (!userManager.userLoggedIn()) {
             UserLoginFragment loginFragment = new UserLoginFragment();
-            loginFragment.show(getSupportFragmentManager(), LOGIN_TAG);
+            loginFragment.show(getSupportFragmentManager(), UserLoginFragment.TAG);
         }
     }
 

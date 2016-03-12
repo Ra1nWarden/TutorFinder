@@ -14,6 +14,8 @@ import project.com.tutorfinder.R;
  */
 public final class UserLoginFragment extends DialogFragment {
 
+    public static final String TAG = "LoginDiag";
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstance) {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -29,7 +31,9 @@ public final class UserLoginFragment extends DialogFragment {
                 .setNegativeButton(R.string.register, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        RegisterUserFragment registerFragment = new RegisterUserFragment();
+                        registerFragment.show(getActivity().getSupportFragmentManager(),
+                                RegisterUserFragment.TAG);
                     }
                 });
         return builder.create();

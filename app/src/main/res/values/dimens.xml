@@ -3,6 +3,8 @@
     <dimen name="action_button_size">24dp</dimen>
     <dimen name="drawer_width">240dp</dimen>
     <dimen name="drawer_item_height">60dp</dimen>
-    <dimen name="login_section_field_width">200dp</dimen>
-    <dimen name="login_section_field_padding">60dp</dimen>
+    <dimen name="section_field_width">200dp</dimen>
+    <dimen name="short_section_field_width">100dp</dimen>
+    <dimen name="section_field_horizontal_padding">20dp</dimen>
+    <dimen name="section_field_vertical_padding">20dp</dimen>
 </resources>
