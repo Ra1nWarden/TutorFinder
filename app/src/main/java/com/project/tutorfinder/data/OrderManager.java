@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import android.provider.ContactsContract;
 
 import project.com.tutorfinder.R;
 
@@ -43,16 +43,6 @@ public final class OrderManager {
         }
     }
 
-    public static int convertToInt(OrderStatus status) {
-        if (status == OrderStatus.APPROVED) {
-            return 1;
-        } else if (status == OrderStatus.REJECTED) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
     public String convertStatusToString(OrderStatus status) {
         if (status == OrderStatus.PENDING) {
             return context.getResources().getString(R.string.pending);
@@ -72,6 +62,30 @@ public final class OrderManager {
         return convertToStatus(cursor.getInt(cursor.getColumnIndex("status")));
     }
 
+    public int getSenderIdForOrder(int orderId) {
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from orders where _id = ?", new
+                String[]{Integer.toString(orderId)});
+        cursor.moveToFirst();
+        return cursor.getInt(cursor.getColumnIndex("sender_id"));
+    }
+
+    public int getRecipientIdForOrder(int orderId) {
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from orders where _id = ?", new
+                String[]{Integer.toString(orderId)});
+        cursor.moveToFirst();
+        return cursor.getInt(cursor.getColumnIndex("recipient_id"));
+    }
+
+    public String getMemoForOrder(int orderId) {
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from orders where _id = ?", new
+                String[]{Integer.toString(orderId)});
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex("memo"));
+    }
+
     public Cursor getCursorForSender(int id) {
         SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
         return database.rawQuery("select * from orders where sender_id = ?", new String[]{Integer
@@ -82,6 +96,16 @@ public final class OrderManager {
         SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
         return database.rawQuery("select * from orders where recipient_id = ?", new
                 String[]{Integer.toString(id)});
+    }
+
+    public void approveOrder(int orderId) {
+        SQLiteDatabase database = databaseOpenHelper.getWritableDatabase();
+        database.execSQL("update orders set status = 1 where _id = " + orderId);
+    }
+
+    public void rejectOrder(int orderId) {
+        SQLiteDatabase database = databaseOpenHelper.getWritableDatabase();
+        database.execSQL("update orders set status = -1 where _id = " + orderId);
     }
 
     public enum OrderStatus {

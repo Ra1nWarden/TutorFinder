@@ -18,14 +18,14 @@ public final class OrderListAdapter extends CursorAdapter {
     private String columnNameForDisplay;
     private LayoutInflater layoutInflater;
     private OrderManager orderManager;
-    private Context context;
+    private UserManager userManager;
 
     public OrderListAdapter(Context context, Cursor c, int flags, String columnNameForDisplay) {
         super(context, c, flags);
         this.columnNameForDisplay = columnNameForDisplay;
         layoutInflater = LayoutInflater.from(context);
         orderManager = new OrderManager(context);
-        this.context = context;
+        userManager = new UserManager(context);
     }
 
     @Override
@@ -42,8 +42,9 @@ public final class OrderListAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
-        viewHolder.usernameField.setText(cursor.getString(cursor.getColumnIndex
-                (columnNameForDisplay)));
+        int displayId = cursor.getInt(cursor.getColumnIndex(columnNameForDisplay));
+        viewHolder.usernameField.setText(userManager.getLoggedInUserFieldForId("username",
+                displayId));
         viewHolder.orderId = cursor.getInt(cursor.getColumnIndex("_id"));
         OrderManager.OrderStatus orderStatus = orderManager.getOrderStatusForId(viewHolder.orderId);
         viewHolder.statusField.setText(orderManager.convertStatusToString(orderStatus));
@@ -59,9 +60,13 @@ public final class OrderListAdapter extends CursorAdapter {
         }
     }
 
-    static class ViewHolder {
+    public void reloadData() {
+        notifyDataSetChanged();
+    }
+
+    public static class ViewHolder {
         TextView usernameField;
         TextView statusField;
-        int orderId;
+        public int orderId;
     }
 }

@@ -71,7 +71,10 @@ public final class NewRequestDialogFragment extends DialogFragment {
                                 .remove(NewRequestDialogFragment.this)
                                 .commit();
                     }
-                });
-        return builder.create();
+                })
+                .setCancelable(false);
+        Dialog diag = builder.create();
+        diag.setCanceledOnTouchOutside(false);
+        return diag;
     }
 }

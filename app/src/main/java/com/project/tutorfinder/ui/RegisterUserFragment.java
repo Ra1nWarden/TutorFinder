@@ -76,7 +76,7 @@ public final class RegisterUserFragment extends DialogFragment {
                         UserManager userManager = new UserManager(getActivity());
                         userManager.registerUser(userName, password1, realName, phoneNumber,
                                 address, latitude, longitude);
-                        if(userManager.login(userName, password1)) {
+                        if (userManager.login(userName, password1)) {
                             toast(getActivity(), R.string.login_sucess);
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .remove(RegisterUserFragment.this)
@@ -93,8 +93,11 @@ public final class RegisterUserFragment extends DialogFragment {
                         loginFragment.show(getActivity().getSupportFragmentManager(),
                                 UserLoginFragment.TAG);
                     }
-                });
-        return builder.create();
+                })
+                .setCancelable(false);
+        Dialog diag = builder.create();
+        diag.setCanceledOnTouchOutside(false);
+        return diag;
     }
 
     @Override

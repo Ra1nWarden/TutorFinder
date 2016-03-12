@@ -75,7 +75,10 @@ public final class UserManager {
     }
 
     public String getLoggedInUserField(String fieldName) {
-        int userId = getLoggedInUserId();
+        return getLoggedInUserFieldForId(fieldName, getLoggedInUserId());
+    }
+
+    public String getLoggedInUserFieldForId(String fieldName, int userId) {
         SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(RAW_QUERY, new String[]{Integer.toString
                 (userId)});

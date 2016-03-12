@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.project.tutorfinder.activities.HomeActivity;
 import com.project.tutorfinder.data.UserManager;
 
 import project.com.tutorfinder.R;
@@ -43,6 +44,7 @@ public final class UserLoginFragment extends DialogFragment {
                                     .beginTransaction()
                                     .remove(UserLoginFragment.this)
                                     .commit();
+                            ((HomeActivity) getActivity()).goToHomeView();
                         } else {
                             toast(getActivity(), R.string.login_failure);
                             passwordField.setText("");
@@ -58,8 +60,11 @@ public final class UserLoginFragment extends DialogFragment {
                         registerFragment.show(getActivity().getSupportFragmentManager(),
                                 RegisterUserFragment.TAG);
                     }
-                });
-        return builder.create();
+                })
+                .setCancelable(false);
+        Dialog diag = builder.create();
+        diag.setCanceledOnTouchOutside(false);
+        return diag;
     }
 
     private void toast(Context context, int failedTextId) {

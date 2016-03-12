@@ -23,6 +23,8 @@ import com.project.tutorfinder.data.OrderManager;
 import com.project.tutorfinder.data.ProfileListAdapter;
 import com.project.tutorfinder.data.UserManager;
 import com.project.tutorfinder.ui.AdjacentUserListFragment;
+import com.project.tutorfinder.ui.ReceivedOrderListFragment;
+import com.project.tutorfinder.ui.SentOrderListFragment;
 import com.project.tutorfinder.ui.UserLoginFragment;
 
 import project.com.tutorfinder.R;
@@ -38,7 +40,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
     private UserManager userManager;
     private OrderManager orderManager;
     private TextView titleView;
-    private NavigationListAdapter adapter;
+    private NavigationListAdapter navigationAdapter;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -51,8 +53,8 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
         orderManager = new OrderManager(this);
         setUpActionBar();
         ListView navigationList = (ListView) findViewById(R.id.left_drawer);
-        adapter = new NavigationListAdapter(this);
-        navigationList.setAdapter(adapter);
+        navigationAdapter = new NavigationListAdapter(this);
+        navigationList.setAdapter(navigationAdapter);
     }
 
     private void setUpActionBar() {
@@ -80,7 +82,29 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
         if (!userManager.userLoggedIn()) {
             UserLoginFragment loginFragment = new UserLoginFragment();
             loginFragment.show(getSupportFragmentManager(), UserLoginFragment.TAG);
+        } else {
+            goToHomeView();
         }
+    }
+
+    public void goToHomeView() {
+        AdjacentUserListFragment userList = new AdjacentUserListFragment();
+        DatabaseOpenHelper databaseOpenHelper = new DatabaseOpenHelper(this);
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        String latStr = Double.toString(userManager.getLoggedInUserLatitude());
+        String lonStr = Double.toString(userManager.getLoggedInUserLongitude());
+        Cursor cursor = database.rawQuery("select * from users where _id != ? order by " +
+                "(latitude - ?) * " +
+                "(latitude - ?) + " +
+                "(longitude - ?) * (longitude - ?) asc", new String[]{Integer.toString
+                (userManager.getLoggedInUserId()), latStr, latStr, lonStr,
+                lonStr});
+        AdjacentUserListAdapter adapter = new AdjacentUserListAdapter(this, cursor, 0);
+        userList.setListAdapter(adapter);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, userList)
+                .commit();
+        titleView.setText((String) navigationAdapter.getItem(0));
     }
 
     @Override
@@ -111,43 +135,28 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, profileList)
                     .commit();
+            titleView.setText((String) navigationAdapter.getItem(position));
         } else if (position == 0) {
-            AdjacentUserListFragment userList = new AdjacentUserListFragment();
-            DatabaseOpenHelper databaseOpenHelper = new DatabaseOpenHelper(this);
-            SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
-            String latStr = Double.toString(userManager.getLoggedInUserLatitude());
-            String lonStr = Double.toString(userManager.getLoggedInUserLongitude());
-            Cursor cursor = database.rawQuery("select * from users where _id != ? order by " +
-                    "(latitude - ?) * " +
-                    "(latitude - ?) + " +
-                    "(longitude - ?) * (longitude - ?) asc", new String[]{Integer.toString
-                    (userManager.getLoggedInUserId()), latStr, latStr, lonStr,
-                    lonStr});
-            AdjacentUserListAdapter adapter = new AdjacentUserListAdapter(this, cursor, 0);
-            userList.setListAdapter(adapter);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, userList)
-                    .commit();
+            goToHomeView();
         } else if (position == 1) {
-            ListFragment sentOrders = new ListFragment();
+            SentOrderListFragment sentOrders = new SentOrderListFragment();
             OrderListAdapter adapter = new OrderListAdapter(this, orderManager.getCursorForSender
                     (userManager.getLoggedInUserId()), 0, "recipient_id");
             sentOrders.setListAdapter(adapter);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, sentOrders)
                     .commit();
+            titleView.setText((String) navigationAdapter.getItem(position));
         } else {
             // position == 2
-            ListFragment receivedOrders = new ListFragment();
+            ReceivedOrderListFragment receivedOrders = new ReceivedOrderListFragment();
             OrderListAdapter adapter = new OrderListAdapter(this, orderManager.getCursorForRecipient
                     (userManager.getLoggedInUserId()), 0, "sender_id");
             receivedOrders.setListAdapter(adapter);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, receivedOrders)
                     .commit();
-        }
-        if (position != 4) {
-            titleView.setText((String) adapter.getItem(position));
+            titleView.setText((String) navigationAdapter.getItem(position));
         }
         drawer.closeDrawer(options);
     }
