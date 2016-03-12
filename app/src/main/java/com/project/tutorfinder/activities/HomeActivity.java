@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.project.tutorfinder.data.AdjacentUserListAdapter;
 import com.project.tutorfinder.data.DatabaseOpenHelper;
 import com.project.tutorfinder.data.NavigationListAdapter;
+import com.project.tutorfinder.data.OrderListAdapter;
+import com.project.tutorfinder.data.OrderManager;
 import com.project.tutorfinder.data.ProfileListAdapter;
 import com.project.tutorfinder.data.UserManager;
 import com.project.tutorfinder.ui.AdjacentUserListFragment;
@@ -34,6 +36,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
     private DrawerLayout drawer;
     private ListView options;
     private UserManager userManager;
+    private OrderManager orderManager;
     private TextView titleView;
     private NavigationListAdapter adapter;
 
@@ -45,6 +48,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
         options = (ListView) findViewById(R.id.left_drawer);
         options.setOnItemClickListener(this);
         userManager = new UserManager(this);
+        orderManager = new OrderManager(this);
         setUpActionBar();
         ListView navigationList = (ListView) findViewById(R.id.left_drawer);
         adapter = new NavigationListAdapter(this);
@@ -124,8 +128,27 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, userList)
                     .commit();
+        } else if (position == 1) {
+            ListFragment sentOrders = new ListFragment();
+            OrderListAdapter adapter = new OrderListAdapter(this, orderManager.getCursorForSender
+                    (userManager.getLoggedInUserId()), 0, "recipient_id");
+            sentOrders.setListAdapter(adapter);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, sentOrders)
+                    .commit();
+        } else {
+            // position == 2
+            ListFragment receivedOrders = new ListFragment();
+            OrderListAdapter adapter = new OrderListAdapter(this, orderManager.getCursorForRecipient
+                    (userManager.getLoggedInUserId()), 0, "sender_id");
+            receivedOrders.setListAdapter(adapter);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, receivedOrders)
+                    .commit();
         }
-        titleView.setText((String) adapter.getItem(position));
+        if (position != 4) {
+            titleView.setText((String) adapter.getItem(position));
+        }
         drawer.closeDrawer(options);
     }
 }

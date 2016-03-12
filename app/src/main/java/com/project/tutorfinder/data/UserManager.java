@@ -117,4 +117,12 @@ public final class UserManager {
         return cursor.getDouble(cursor.getColumnIndex("longitude"));
     }
 
+    public String getUsernameForId(int id) {
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from users where _id = ?", new
+                String[]{Integer.toString(id)});
+        cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex("username"));
+    }
+
 }

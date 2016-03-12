@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/recipient_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutor_username"/>
+
+        <EditText
+            android:id="@+id/recipient_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/memo_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/section_field_vertical_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/memo"/>
+
+        <EditText
+            android:id="@+id/memo_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:editable="true"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+</LinearLayout>

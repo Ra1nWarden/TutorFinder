@@ -46,11 +46,12 @@ public final class AdjacentUserListAdapter extends CursorAdapter {
         destLocation.setLongitude(cursor.getDouble(cursor.getColumnIndex("longitude")));
         viewHolder.valueView.setText(String.format("%.1f 米", userLocation.distanceTo
                 (destLocation)));
+        viewHolder.targetId = cursor.getInt(cursor.getColumnIndex("_id"));
     }
 
-    static class ViewHolder {
+    public static class ViewHolder {
         TextView titleView;
         TextView valueView;
-        int targetId;
+        public int targetId;
     }
 }
