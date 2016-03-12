@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user_name"/>
+            android:text="@string/password"/>
 
         <EditText
             android:id="@+id/password_field"
@@ -59,13 +59,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/password"/>
+            android:text="@string/confirm_password"/>
 
         <EditText
             android:id="@+id/confirm_password_field"
             android:layout_width="@dimen/section_field_width"
             android:layout_height="wrap_content"
             android:inputType="numberPassword"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/real_name_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/section_field_vertical_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/real_name"/>
+
+        <EditText
+            android:id="@+id/real_name_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:inputType="text"
             android:paddingLeft="@dimen/section_field_horizontal_padding"/>
 
     </LinearLayout>
@@ -81,7 +103,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/confirm_password"/>
+            android:text="@string/phone_number"/>
 
         <EditText
             android:id="@+id/phone_number_field"

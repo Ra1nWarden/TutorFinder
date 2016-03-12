@@ -41,37 +41,49 @@ public final class RegisterUserFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         String userName = getInputData(R.id.use_name_field);
                         if (userName.isEmpty()) {
-                            fail(getActivity(), R.string.empty_username);
+                            toast(getActivity(), R.string.empty_username);
                             return;
                         }
                         String password1 = getInputData(R.id.password_field);
                         String password2 = getInputData(R.id.confirm_password_field);
                         if (password1.isEmpty() || password2.isEmpty()) {
-                            fail(getActivity(), R.string.empty_password);
+                            toast(getActivity(), R.string.empty_password);
                             return;
                         }
                         if (!password1.equals(password2)) {
-                            fail(getActivity(), R.string.unmatched_password);
+                            toast(getActivity(), R.string.unmatched_password);
+                            return;
+                        }
+                        String realName = getInputData(R.id.real_name_field);
+                        if (realName.isEmpty()) {
+                            toast(getActivity(), R.string.empty_real_name);
                             return;
                         }
                         String phoneNumber = getInputData(R.id.phone_number_field);
                         if (phoneNumber.isEmpty()) {
-                            fail(getActivity(), R.string.empty_phone_number);
+                            toast(getActivity(), R.string.empty_phone_number);
                             return;
                         }
                         String address = getInputData(R.id.address_field);
                         String latString = getInputData(R.id.latitude_field);
                         String lonString = getInputData(R.id.longitude_field);
                         if (address.isEmpty() || latString.isEmpty() || lonString.isEmpty()) {
-                            fail(getActivity(), R.string.empty_address);
+                            toast(getActivity(), R.string.empty_address);
                             return;
                         }
                         double latitude = Double.parseDouble(latString);
                         double longitude = Double.parseDouble(lonString);
                         UserManager userManager = new UserManager(getActivity());
-                        userManager.registerUser(userName, password1, phoneNumber, address,
-                                latitude, longitude);
-                        userManager.login(userName, password1);
+                        userManager.registerUser(userName, password1, realName, phoneNumber,
+                                address, latitude, longitude);
+                        if(userManager.login(userName, password1)) {
+                            toast(getActivity(), R.string.login_sucess);
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .remove(RegisterUserFragment.this)
+                                    .commit();
+                        } else {
+                            toast(getActivity(), R.string.unkown_eror);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -100,7 +112,7 @@ public final class RegisterUserFragment extends DialogFragment {
         return text.getText().toString().trim();
     }
 
-    private void fail(Context context, int failedTextId) {
+    private void toast(Context context, int failedTextId) {
         String failedText = context.getResources().getString(failedTextId);
         Toast.makeText(context, failedText, Toast.LENGTH_SHORT).show();
     }

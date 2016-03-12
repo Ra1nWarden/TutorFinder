@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="navigation_items">
+        <item>周边家教</item>
+        <item>发出的订单</item>
+        <item>收到的订单</item>
+        <item>个人资料</item>
+        <item>登出</item>
+    </string-array>
+    <string-array name="personal_profile_items">
+        <item>用户名</item>
+        <item>真实姓名</item>
+        <item>联系电话</item>
+        <item>住址</item>
+    </string-array>
+</resources>

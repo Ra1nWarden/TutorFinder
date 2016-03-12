@@ -15,5 +15,13 @@
     <string name="empty_address">空的坐标或地址</string>
     <string name="empty_phone_number">空的电话号码</string>
     <string name="latitude">经度</string>
+    <string name="real_name">真实姓名</string>
+    <string name="empty_real_name">真实姓名为空</string>
     <string name="longitude">纬度</string>
+    <string name="login_sucess">登陆成功</string>
+    <string name="login_failure">登录失败</string>
+    <string name="unkown_eror">未知错误</string>
+    <string name="log_out">登出</string>
+    <string name="confirm_log_out">确认退出登陆？</string>
+    <string name="confirm">确认</string>
 </resources>
