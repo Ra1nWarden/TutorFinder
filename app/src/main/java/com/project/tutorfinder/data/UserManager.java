@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -78,15 +79,42 @@ public final class UserManager {
         SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(RAW_QUERY, new String[]{Integer.toString
                 (userId)});
-        if(cursor.getCount() > 0) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             return cursor.getString(cursor.getColumnIndex(fieldName));
         } else {
-            if(Log.isLoggable(TAG, Log.ERROR)) {
+            if (Log.isLoggable(TAG, Log.ERROR)) {
                 Log.e(TAG, "No item found in database.");
             }
             return null;
         }
+    }
+
+    public Location getLoggedInUserLocation() {
+        int userId = getLoggedInUserId();
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery(RAW_QUERY, new String[]{Integer.toString(userId)});
+        cursor.moveToFirst();
+        Location location = new Location("");
+        location.setLatitude(cursor.getDouble(cursor.getColumnIndex("latitude")));
+        location.setLongitude(cursor.getDouble(cursor.getColumnIndex("longitude")));
+        return location;
+    }
+
+    public double getLoggedInUserLatitude() {
+        int userId = getLoggedInUserId();
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery(RAW_QUERY, new String[]{Integer.toString(userId)});
+        cursor.moveToFirst();
+        return cursor.getDouble(cursor.getColumnIndex("latitude"));
+    }
+
+    public double getLoggedInUserLongitude() {
+        int userId = getLoggedInUserId();
+        SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery(RAW_QUERY, new String[]{Integer.toString(userId)});
+        cursor.moveToFirst();
+        return cursor.getDouble(cursor.getColumnIndex("longitude"));
     }
 
 }

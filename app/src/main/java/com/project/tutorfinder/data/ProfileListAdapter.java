@@ -44,10 +44,10 @@ public final class ProfileListAdapter extends BaseAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.profile_list_item, parent, false);
+            view = inflater.inflate(R.layout.list_item, parent, false);
             final ViewHolder viewHolder = new ViewHolder();
-            viewHolder.titleView = (TextView) view.findViewById(R.id.profile_item_title);
-            viewHolder.valueView = (TextView) view.findViewById(R.id.profile_item_value);
+            viewHolder.titleView = (TextView) view.findViewById(R.id.item_title);
+            viewHolder.valueView = (TextView) view.findViewById(R.id.item_value);
             view.setTag(viewHolder);
         }
         ViewHolder holder = (ViewHolder) view.getTag();

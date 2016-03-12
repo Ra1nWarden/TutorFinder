@@ -1,6 +1,8 @@
 package com.project.tutorfinder.activities;
 
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
@@ -13,9 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.project.tutorfinder.data.AdjacentUserListAdapter;
+import com.project.tutorfinder.data.DatabaseOpenHelper;
 import com.project.tutorfinder.data.NavigationListAdapter;
 import com.project.tutorfinder.data.ProfileListAdapter;
 import com.project.tutorfinder.data.UserManager;
+import com.project.tutorfinder.ui.AdjacentUserListFragment;
 import com.project.tutorfinder.ui.UserLoginFragment;
 
 import project.com.tutorfinder.R;
@@ -101,6 +106,23 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
             profileList.setListAdapter(new ProfileListAdapter(this));
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, profileList)
+                    .commit();
+        } else if (position == 0) {
+            AdjacentUserListFragment userList = new AdjacentUserListFragment();
+            DatabaseOpenHelper databaseOpenHelper = new DatabaseOpenHelper(this);
+            SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
+            String latStr = Double.toString(userManager.getLoggedInUserLatitude());
+            String lonStr = Double.toString(userManager.getLoggedInUserLongitude());
+            Cursor cursor = database.rawQuery("select * from users where _id != ? order by " +
+                    "(latitude - ?) * " +
+                    "(latitude - ?) + " +
+                    "(longitude - ?) * (longitude - ?) asc", new String[]{Integer.toString
+                    (userManager.getLoggedInUserId()), latStr, latStr, lonStr,
+                    lonStr});
+            AdjacentUserListAdapter adapter = new AdjacentUserListAdapter(this, cursor, 0);
+            userList.setListAdapter(adapter);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, userList)
                     .commit();
         }
         titleView.setText((String) adapter.getItem(position));
