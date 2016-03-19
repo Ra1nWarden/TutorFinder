@@ -56,11 +56,14 @@ public final class UserManager {
     }
 
     public boolean registerUser(String userName, String password, String realName, String
-            phoneNumber, String address, double lat, double lon) {
+            accountType, String subject, String phoneNumber, String address, double lat, double
+                                        lon) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", userName);
         contentValues.put("password", password);
         contentValues.put("realname", realName);
+        contentValues.put("account_type", accountType);
+        contentValues.put("subject", subject);
         contentValues.put("phone_number", phoneNumber);
         contentValues.put("address", address);
         contentValues.put("latitude", lat);
@@ -126,6 +129,10 @@ public final class UserManager {
                 String[]{Integer.toString(id)});
         cursor.moveToFirst();
         return cursor.getString(cursor.getColumnIndex("username"));
+    }
+
+    public boolean isLoggedInUserTutor() {
+        return getLoggedInUserField("account_type").equals("教师");
     }
 
 }

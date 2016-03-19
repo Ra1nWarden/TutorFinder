@@ -65,6 +65,12 @@ public final class ProfileListAdapter extends BaseAdapter {
             case 3:
                 holder.valueView.setText(userManager.getLoggedInUserField("address"));
                 break;
+            case 4:
+                holder.valueView.setText(userManager.getLoggedInUserField("account_type"));
+                break;
+            case 5:
+                holder.valueView.setText(userManager.getLoggedInUserField("subject"));
+                break;
         }
         return view;
     }

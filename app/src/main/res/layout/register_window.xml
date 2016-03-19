@@ -93,6 +93,49 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/account_type_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/section_field_vertical_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_type"/>
+
+        <Spinner
+            android:id="@+id/account_type_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/subject_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/section_field_vertical_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subject"/>
+
+        <EditText
+            android:id="@+id/subject_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/phone_number_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

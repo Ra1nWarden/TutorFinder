@@ -13,6 +13,7 @@
     <string name="empty_password">空的密码</string>
     <string name="unmatched_password">密码不一致</string>
     <string name="empty_address">空的坐标或地址</string>
+    <string name="empty_subject_name">空的学科</string>
     <string name="empty_phone_number">空的电话号码</string>
     <string name="latitude">经度</string>
     <string name="real_name">真实姓名</string>
@@ -46,4 +47,8 @@
     <string name="order_approved_toast">已接受订单</string>
     <string name="order_rejected_toast">已拒绝订单</string>
     <string name="reject">拒绝</string>
+    <string name="account_type">账号类型</string>
+    <string name="subject">学科</string>
+    <string name="student">学生</string>
+    <string name="teacher">教师</string>
 </resources>

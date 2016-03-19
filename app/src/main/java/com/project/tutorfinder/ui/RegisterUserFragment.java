@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.project.tutorfinder.data.UserManager;
@@ -33,6 +35,11 @@ public final class RegisterUserFragment extends DialogFragment {
         forms = (LinearLayout) inflater.inflate(R.layout.register_window, null);
         latField = (EditText) forms.findViewById(R.id.latitude_field);
         lonField = (EditText) forms.findViewById(R.id.longitude_field);
+        final Spinner spinner = (Spinner) forms.findViewById(R.id.account_type_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.account_type_items, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.register)
                 .setView(forms)
@@ -59,6 +66,11 @@ public final class RegisterUserFragment extends DialogFragment {
                             toast(getActivity(), R.string.empty_real_name);
                             return;
                         }
+                        String subjectName = getInputData(R.id.subject_field);
+                        if (subjectName.isEmpty()) {
+                            toast(getActivity(), R.string.empty_subject_name);
+                            return;
+                        }
                         String phoneNumber = getInputData(R.id.phone_number_field);
                         if (phoneNumber.isEmpty()) {
                             toast(getActivity(), R.string.empty_phone_number);
@@ -74,8 +86,9 @@ public final class RegisterUserFragment extends DialogFragment {
                         double latitude = Double.parseDouble(latString);
                         double longitude = Double.parseDouble(lonString);
                         UserManager userManager = new UserManager(getActivity());
-                        userManager.registerUser(userName, password1, realName, phoneNumber,
-                                address, latitude, longitude);
+                        String accountType = ((CharSequence) spinner.getSelectedItem()).toString();
+                        userManager.registerUser(userName, password1, realName, accountType,
+                                subjectName, phoneNumber, address, latitude, longitude);
                         if (userManager.login(userName, password1)) {
                             toast(getActivity(), R.string.login_sucess);
                             getActivity().getSupportFragmentManager().beginTransaction()

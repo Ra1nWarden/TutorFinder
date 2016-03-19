@@ -109,7 +109,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == 4) {
+        if (position == 3) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle(R.string.log_out)
                     .setMessage(R.string.confirm_log_out)
@@ -129,7 +129,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
                     });
             AlertDialog dialog = builder.create();
             dialog.show();
-        } else if (position == 3) {
+        } else if (position == 2) {
             ListFragment profileList = new ListFragment();
             profileList.setListAdapter(new ProfileListAdapter(this));
             getSupportFragmentManager().beginTransaction()
@@ -139,24 +139,28 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
         } else if (position == 0) {
             goToHomeView();
         } else if (position == 1) {
-            SentOrderListFragment sentOrders = new SentOrderListFragment();
-            OrderListAdapter adapter = new OrderListAdapter(this, orderManager.getCursorForSender
-                    (userManager.getLoggedInUserId()), 0, "recipient_id");
-            sentOrders.setListAdapter(adapter);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, sentOrders)
-                    .commit();
-            titleView.setText((String) navigationAdapter.getItem(position));
-        } else {
-            // position == 2
-            ReceivedOrderListFragment receivedOrders = new ReceivedOrderListFragment();
-            OrderListAdapter adapter = new OrderListAdapter(this, orderManager.getCursorForRecipient
-                    (userManager.getLoggedInUserId()), 0, "sender_id");
-            receivedOrders.setListAdapter(adapter);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, receivedOrders)
-                    .commit();
-            titleView.setText((String) navigationAdapter.getItem(position));
+            if (userManager.isLoggedInUserTutor()) {
+                ReceivedOrderListFragment receivedOrders = new ReceivedOrderListFragment();
+                OrderListAdapter adapter = new OrderListAdapter(this, orderManager
+                        .getCursorForRecipient
+                        (userManager.getLoggedInUserId()), 0, "sender_id");
+                receivedOrders.setListAdapter(adapter);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, receivedOrders)
+                        .commit();
+                titleView.setText((String) navigationAdapter.getItem(position));
+            } else {
+                SentOrderListFragment sentOrders = new SentOrderListFragment();
+                OrderListAdapter adapter = new OrderListAdapter(this, orderManager
+                        .getCursorForSender
+
+                        (userManager.getLoggedInUserId()), 0, "recipient_id");
+                sentOrders.setListAdapter(adapter);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, sentOrders)
+                        .commit();
+                titleView.setText((String) navigationAdapter.getItem(position));
+            }
         }
         drawer.closeDrawer(options);
     }

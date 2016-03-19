@@ -17,12 +17,10 @@ import project.com.tutorfinder.R;
 public final class AdjacentUserListAdapter extends CursorAdapter {
 
     private UserManager userManager;
-    private Location userLocation;
 
     public AdjacentUserListAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         userManager = new UserManager(context);
-        userLocation = userManager.getLoggedInUserLocation();
     }
 
     @Override
@@ -44,8 +42,7 @@ public final class AdjacentUserListAdapter extends CursorAdapter {
         Location destLocation = new Location("");
         destLocation.setLatitude(cursor.getDouble(cursor.getColumnIndex("latitude")));
         destLocation.setLongitude(cursor.getDouble(cursor.getColumnIndex("longitude")));
-        viewHolder.valueView.setText(String.format("%.1f 米", userLocation.distanceTo
-                (destLocation)));
+        viewHolder.valueView.setText(cursor.getString(cursor.getColumnIndex("address")));
         viewHolder.targetId = cursor.getInt(cursor.getColumnIndex("_id"));
     }
 
