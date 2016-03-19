@@ -50,6 +50,9 @@ public final class UserLoginFragment extends DialogFragment {
                             passwordField.setText("");
                             userNameField.setSelection(0, userNameField.getText().toString()
                                     .length());
+                            UserLoginFragment loginFragment = new UserLoginFragment();
+                            loginFragment.show(getActivity().getSupportFragmentManager(),
+                                    UserLoginFragment.TAG);
                         }
                     }
                 })
