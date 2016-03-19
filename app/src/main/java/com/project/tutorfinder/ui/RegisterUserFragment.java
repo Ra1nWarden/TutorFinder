@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -22,7 +23,7 @@ import project.com.tutorfinder.R;
 /**
  * A dialog fragment for creating new user.
  */
-public final class RegisterUserFragment extends DialogFragment {
+public final class RegisterUserFragment extends DialogFragment implements LocationListener {
 
     public static final String TAG = "RegisterDiag";
     private LinearLayout forms;
@@ -118,9 +119,15 @@ public final class RegisterUserFragment extends DialogFragment {
         super.onResume();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService
                 (Context.LOCATION_SERVICE);
-        Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        latField.setText(String.format("%.4f", lastLocation.getLatitude()));
-        lonField.setText(String.format("%.4f", lastLocation.getLongitude()));
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        if (locationManager != null) {
+            Location lastLocation = locationManager.getLastKnownLocation(LocationManager
+                    .GPS_PROVIDER);
+            if (lastLocation != null) {
+                latField.setText(String.format("%.4f", lastLocation.getLatitude()));
+                lonField.setText(String.format("%.4f", lastLocation.getLongitude()));
+            }
+        }
     }
 
     private String getInputData(int formViewId) {
@@ -131,5 +138,28 @@ public final class RegisterUserFragment extends DialogFragment {
     private void toast(Context context, int failedTextId) {
         String failedText = context.getResources().getString(failedTextId);
         Toast.makeText(context, failedText, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location != null) {
+            latField.setText(String.format("%.4f", location.getLatitude()));
+            lonField.setText(String.format("%.4f", location.getLongitude()));
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
