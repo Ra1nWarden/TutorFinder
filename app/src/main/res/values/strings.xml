@@ -51,4 +51,8 @@
     <string name="subject">学科</string>
     <string name="student">学生</string>
     <string name="teacher">教师</string>
+    <string name="tutor_subject">家教学科</string>
+    <string name="tutor_name">家教姓名</string>
+    <string name="tutor_address">家教地址</string>
+    <string name="tutor_phone">家教电话</string>
 </resources>

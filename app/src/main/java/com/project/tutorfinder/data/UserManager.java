@@ -78,10 +78,10 @@ public final class UserManager {
     }
 
     public String getLoggedInUserField(String fieldName) {
-        return getLoggedInUserFieldForId(fieldName, getLoggedInUserId());
+        return getUserFieldForId(fieldName, getLoggedInUserId());
     }
 
-    public String getLoggedInUserFieldForId(String fieldName, int userId) {
+    public String getUserFieldForId(String fieldName, int userId) {
         SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(RAW_QUERY, new String[]{Integer.toString
                 (userId)});
@@ -133,6 +133,10 @@ public final class UserManager {
 
     public boolean isLoggedInUserTutor() {
         return getLoggedInUserField("account_type").equals("教师");
+    }
+
+    public boolean getIsTutorForId(int id) {
+        return getUserFieldForId("account_type", id).equals("教师");
     }
 
 }

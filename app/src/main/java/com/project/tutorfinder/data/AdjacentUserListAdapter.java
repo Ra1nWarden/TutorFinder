@@ -31,6 +31,7 @@ public final class AdjacentUserListAdapter extends CursorAdapter {
         viewHolder.titleView = (TextView) v.findViewById(R.id.item_title);
         viewHolder.valueView = (TextView) v.findViewById(R.id.item_value);
         viewHolder.targetId = cursor.getInt(cursor.getColumnIndex("_id"));
+        viewHolder.tutor = userManager.getIsTutorForId(viewHolder.targetId);
         v.setTag(viewHolder);
         return v;
     }
@@ -38,7 +39,13 @@ public final class AdjacentUserListAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
-        viewHolder.titleView.setText(cursor.getString(cursor.getColumnIndex("username")));
+        if (viewHolder.tutor) {
+            viewHolder.titleView.setText(cursor.getString(cursor.getColumnIndex("username")) + " " +
+                    "(教师)");
+        } else {
+            viewHolder.titleView.setText(cursor.getString(cursor.getColumnIndex("username")) + " " +
+                    "(学生)");
+        }
         Location destLocation = new Location("");
         destLocation.setLatitude(cursor.getDouble(cursor.getColumnIndex("latitude")));
         destLocation.setLongitude(cursor.getDouble(cursor.getColumnIndex("longitude")));
@@ -50,5 +57,6 @@ public final class AdjacentUserListAdapter extends CursorAdapter {
         TextView titleView;
         TextView valueView;
         public int targetId;
+        public boolean tutor;
     }
 }

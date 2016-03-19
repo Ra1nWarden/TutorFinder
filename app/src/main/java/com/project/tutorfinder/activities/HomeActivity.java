@@ -88,7 +88,8 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
     }
 
     public void goToHomeView() {
-        AdjacentUserListFragment userList = new AdjacentUserListFragment();
+        AdjacentUserListFragment userList = AdjacentUserListFragment.createAdjacentUserList
+                (!userManager.isLoggedInUserTutor());
         DatabaseOpenHelper databaseOpenHelper = new DatabaseOpenHelper(this);
         SQLiteDatabase database = databaseOpenHelper.getReadableDatabase();
         String latStr = Double.toString(userManager.getLoggedInUserLatitude());
@@ -143,7 +144,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
                 ReceivedOrderListFragment receivedOrders = new ReceivedOrderListFragment();
                 OrderListAdapter adapter = new OrderListAdapter(this, orderManager
                         .getCursorForRecipient
-                        (userManager.getLoggedInUserId()), 0, "sender_id");
+                                (userManager.getLoggedInUserId()), 0, "sender_id");
                 receivedOrders.setListAdapter(adapter);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, receivedOrders)
@@ -154,7 +155,7 @@ public final class HomeActivity extends AppCompatActivity implements AdapterView
                 OrderListAdapter adapter = new OrderListAdapter(this, orderManager
                         .getCursorForSender
 
-                        (userManager.getLoggedInUserId()), 0, "recipient_id");
+                                (userManager.getLoggedInUserId()), 0, "recipient_id");
                 sentOrders.setListAdapter(adapter);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, sentOrders)

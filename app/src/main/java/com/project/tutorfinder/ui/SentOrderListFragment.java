@@ -31,13 +31,13 @@ public final class SentOrderListFragment extends ListFragment {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             View informationView = layoutInflater.inflate(R.layout.user_information_window, null);
             TextView realNameView = (TextView) informationView.findViewById(R.id.real_name_field);
-            realNameView.setText(userManager.getLoggedInUserFieldForId("realname", recipientId));
+            realNameView.setText(userManager.getUserFieldForId("realname", recipientId));
             TextView phoneNumberView = (TextView) informationView.findViewById(R.id
                     .phone_number_field);
-            phoneNumberView.setText(userManager.getLoggedInUserFieldForId("phone_number",
+            phoneNumberView.setText(userManager.getUserFieldForId("phone_number",
                     recipientId));
             TextView addressView = (TextView) informationView.findViewById(R.id.address_field);
-            addressView.setText(userManager.getLoggedInUserFieldForId("address", recipientId));
+            addressView.setText(userManager.getUserFieldForId("address", recipientId));
             TextView memoView = (TextView) informationView.findViewById(R.id.memo_field);
             memoView.setText(orderManager.getMemoForOrder(orderId));
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())

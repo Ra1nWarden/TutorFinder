@@ -40,7 +40,17 @@ public final class NewRequestDialogFragment extends DialogFragment {
         final UserManager userManager = new UserManager(getActivity());
         final EditText memoView = (EditText) v.findViewById(R.id.memo_field);
         final EditText recipientView = (EditText) v.findViewById(R.id.recipient_field);
+        final EditText subjectView = (EditText) v.findViewById(R.id.subject_field);
+        subjectView.setText(userManager.getUserFieldForId("subject", recipientId));
         recipientView.setText(userManager.getUsernameForId(recipientId));
+
+        final EditText tutorNameView = (EditText) v.findViewById(R.id.tutor_name_field);
+        tutorNameView.setText(userManager.getUserFieldForId("realname", recipientId));
+        final EditText tutorAddressView = (EditText) v.findViewById(R.id.tutor_address_field);
+        tutorAddressView.setText(userManager.getUserFieldForId("address", recipientId));
+        final EditText tutorPhoneView = (EditText) v.findViewById(R.id.tutor_phone_field);
+        tutorPhoneView.setText(userManager.getUserFieldForId("phone_number", recipientId));
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.new_request)
                 .setView(v)

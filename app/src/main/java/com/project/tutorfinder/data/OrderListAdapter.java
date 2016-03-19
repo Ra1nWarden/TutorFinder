@@ -43,7 +43,7 @@ public final class OrderListAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
         int displayId = cursor.getInt(cursor.getColumnIndex(columnNameForDisplay));
-        viewHolder.usernameField.setText(userManager.getLoggedInUserFieldForId("username",
+        viewHolder.usernameField.setText(userManager.getUserFieldForId("username",
                 displayId));
         viewHolder.orderId = cursor.getInt(cursor.getColumnIndex("_id"));
         OrderManager.OrderStatus orderStatus = orderManager.getOrderStatusForId(viewHolder.orderId);

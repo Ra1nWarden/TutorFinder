@@ -26,6 +26,86 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/recipient_subject_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutor_subject"/>
+
+        <EditText
+            android:id="@+id/subject_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tutor_name_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutor_name"/>
+
+        <EditText
+            android:id="@+id/tutor_name_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tutor_address_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutor_address"/>
+
+        <EditText
+            android:id="@+id/tutor_address_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tutor_phone_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tutor_phone"/>
+
+        <EditText
+            android:id="@+id/tutor_phone_field"
+            android:layout_width="@dimen/section_field_width"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:paddingLeft="@dimen/section_field_horizontal_padding"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/memo_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
